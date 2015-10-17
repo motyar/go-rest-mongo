@@ -2,7 +2,7 @@
 
 Demo https://rest-golangapi.rhcloud.com/pandas/
 
-# Nothing but (cute) Pandas
+# Nothing but cute Pandas
 
 GET /pandas/ to get all the pandas.
     or /pandas/:id to get on with id

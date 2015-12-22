@@ -31,12 +31,14 @@ App.factory('Factory',function($http){
   factory.get = function(){
     return $http.get("http://rest-golangapi.rhcloud.com/pandas/");
   }
-
   factory.add = function(newPanda){
       return $http.post("http://rest-golangapi.rhcloud.com/pandas/",{"id":'',"name":newPanda});
   }
   factory.del = function(id){
     return $http.delete("http://rest-golangapi.rhcloud.com/pandas/"+id);
+  }
+  factory.update = function(id, newPanda){
+    return $http.put("http://rest-golangapi.rhcloud.com/pandas/"+id,{"id":'',"name":newPanda});
   }
 
     return factory;
@@ -78,6 +80,7 @@ App.directive("contenteditable", function() {
 
       function read() {
         ngModel.$setViewValue(element.html());
+        console.log(scope);
         //scope.add(ngModel.$modelValue);
       }
 

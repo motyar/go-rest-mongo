@@ -66,8 +66,13 @@ App.controller('pandas',function($scope,Factory){
                     });
            }
     }
-    $scope.del = function(todoId){
-            Factory.del(todoId).success(function(data){
+    $scope.del = function(pandaId){
+            Factory.del(pandaId).success(function(data){
+                    loadPandas();
+            })
+    }
+    $scope.update = function(pandaId, pandaName){
+            Factory.update(pandaId, pandaName).success(function(data){
                     loadPandas();
             })
     }
@@ -80,7 +85,8 @@ App.directive("contenteditable", function() {
 
       function read() {
         ngModel.$setViewValue(element.html());
-        console.log(scope);
+        console.log(scope.this.panda.id);
+        scope.update("56796f78f43c0bcdd26bd2e3",ngModel.$modelValue)
         //scope.add(ngModel.$modelValue);
       }
 

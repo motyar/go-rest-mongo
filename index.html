@@ -62,7 +62,7 @@ App.controller('pandas',function($scope,Factory){
     $scope.add = function(){
         if($scope.newPanda!=''){
            Factory.add($scope.newPanda).success(function(data){
-                        $scope.newPanda
+                        $scope.newPanda="";
                         loadPandas();
                     });
            }

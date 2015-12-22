@@ -85,9 +85,7 @@ App.directive("contenteditable", function() {
 
       function read() {
         ngModel.$setViewValue(element.html());
-        console.log(scope.this.panda.id);
-        scope.update("56796f78f43c0bcdd26bd2e3",ngModel.$modelValue)
-        //scope.add(ngModel.$modelValue);
+        scope.update(scope.this.panda.id,ngModel.$modelValue)
       }
 
       ngModel.$render = function() {

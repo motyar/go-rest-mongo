@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+  <meta charset="utf-8">
+  <title>Angular front-end for GO Rest API</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body ng-app="App">
+<h1>Angular front-end for GO REST API</h1>
+<h2>Pandas</h2>
+<input type="text" ng-model="search" class="search-query" placeholder="Search">
+  <div ng-controller="pandas">
+    <ol>
+        <li ng-repeat="panda in pandas | filter:search">
+        <span ng-model="panda.name" contenteditable>
+            {{panda.name}}
+        </span>
+        <a href="#" ng-click="del(panda.id);" title="Click to delete!" class="icon-trash">X</a>
+        </li>
+    </ol>
+     <input type="text" ng-model="newPanda"><input type="button" value="Add" ng-click="add();">
+  </div>
+<script>
+var App = angular.module('App',[]);
+
+App.factory('Factory',function($http){
+  var factory = [];
+  
+  factory.get = function(){
+    return $http.get("http://rest-golangapi.rhcloud.com/pandas/");
+  }
+
+  factory.add = function(newPanda){
+      return $http.post("http://rest-golangapi.rhcloud.com/pandas/",{"id":'',"name":newPanda});
+  }
+  factory.del = function(id){
+    return $http.delete("http://rest-golangapi.rhcloud.com/pandas/"+id);
+  }
+
+    return factory;
+});
+
+App.controller('pandas',function($scope,Factory){
+  
+  $scope.todos = [];
+  loadPandas();
+  
+  function loadPandas(){
+    Factory.get().success(function(data){
+        $scope.pandas = data;
+    });
+    }
+    $scope.get = function(){
+           Factory.get($scope.PandaId).success(function(data){
+                        loadPandas();
+                        });
+    }
+    $scope.add = function(){
+        if($scope.newPanda!=''){
+           Factory.add($scope.newPanda).success(function(data){
+                        loadPandas();
+                    });
+           }
+    }
+    $scope.del = function(todoId){
+            Factory.del(todoId).success(function(data){
+                    loadPandas();
+            })
+    }
+});
+App.directive("contenteditable", function() {
+  return {
+    restrict: "A",
+    require: "ngModel",
+    link: function(scope, element, attrs, ngModel) {
+
+      function read() {
+        ngModel.$setViewValue(element.html());
+        //scope.add(ngModel.$modelValue);
+      }
+
+      ngModel.$render = function() {
+        element.html(ngModel.$viewValue || "");
+      };
+
+      element.bind("blur keyup change", function() {
+        scope.$apply(read);
+      });
+    }
+  };
+});
+</script>
+</body>
+<!-- -->
+</html>

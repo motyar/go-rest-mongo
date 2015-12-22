@@ -92,7 +92,7 @@ App.directive("contenteditable", function() {
         element.html(ngModel.$viewValue || "");
       };
 
-      element.bind("blur keyup change", function() {
+      element.bind("blur change", function() {
         scope.$apply(read);
       });
     }

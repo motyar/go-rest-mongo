@@ -17,7 +17,7 @@
         <span ng-model="panda.name" contenteditable>
             {{panda.name}}
         </span>
-        <a href="#" ng-click="del(panda.id);" title="Click to delete!" class="icon-trash" onclick="return confirm('Are you sure you want to delete?');">X</a>
+        <a href="#" ng-click="del(panda.id);" title="Click to delete!" class="icon-trash">X</a>
         </li>
     </ol>
      <input type="text" placeholder="New Panda name" ng-model="newPanda" ng-keyup="$event.keyCode == 13 && add()"><input type="button" value="Add" ng-click="add();">
@@ -68,9 +68,11 @@ App.controller('pandas',function($scope,Factory){
            }
     }
     $scope.del = function(pandaId){
+      if (confirm("sure to delete")) {
             Factory.del(pandaId).success(function(data){
                     loadPandas();
             })
+      }
     }
     $scope.update = function(pandaId, pandaName){
             Factory.update(pandaId, pandaName).success(function(data){
